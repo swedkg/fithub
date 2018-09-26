@@ -1,0 +1,101 @@
+<div ng-controller="activitiesController as vm">
+
+  <h1>{{vm.something}}</h1>
+
+  <!-- <pre>current user: {{vm.currentUser | json}}</pre> -->
+  <!-- <pre>editActivityId: {{vm.editActivityId | json}}</pre> -->
+  <!-- <pre>editMode: {{vm.editMode | json}}</pre> -->
+
+  <!-- <pre>vm.activities: {{vm.activities | json}}</pre> -->
+  <!-- <pre>activitiesTypes: {{vm.activitiesTypes | json}}</pre> -->
+  <!-- <pre>vm.activitesPlaceholder: {{vm.activitesPlaceholder | json}}</pre> -->
+  <!-- <pre>vm.currentUserActivitiesTypes: {{vm.currentUserActivitiesTypes | json}}</pre> -->
+  <!-- <pre>vm.activitiesFilters: {{vm.activitiesFilters | json}}</pre> -->
+  <!-- <pre>vm.activityFilter: {{vm.activityFilter | json}}</pre> -->
+  <pre>vm.sortByProperty: {{vm.sortByProperty | json}}</pre>
+  <pre>vm.reverse: {{vm.reverse | json}}</pre>
+  <pre>vm.order: {{vm.order | json}}</pre>
+  <pre>vm.searchTerm: {{vm.searchTerm | json}}</pre>
+
+
+<ng-include src="'/assets/views/activitiesSearchPartial.html'"></ng-include>
+<ng-include src="'/assets/views/activitiesTablePartial.html'"></ng-include>
+
+
+  <!-- <table class="table table-hover activities-table" ng-cloak>
+    <thead class="thead-light">
+      <tr>
+        <th class="cursor-pointer" ng-click="vm.sortBy('id')">
+          <span class="title">
+            <span class="noselect">#</span>
+            <span class="sortorder" ng-if="vm.propertyName === 'id'" ng-class="{'reverse': vm.reverse}">
+            </span>
+          </span>
+        </th>
+        <th class="cursor-pointer" ng-click="vm.sortBy('title')">
+          <span class="title">
+            <span class="noselect">Title</span>
+            <span class="sortorder"
+                  ng-if="vm.propertyName === 'title'"
+                  ng-class="{'reverse': vm.reverse}">
+            </span>
+          </span>
+        </th>
+        <th class="cursor-pointer" ng-click="vm.sortBy('date')">
+          <span class="title">
+            <span class="noselect">Date</span>
+            <span class="sortorder"
+                  ng-if="vm.propertyName === 'date'"
+                  ng-class="{reverse: vm.reverse}">
+            </span>
+          </span>
+        </th>
+        <th class="cursor-pointer" ng-click="vm.sortBy('type')">
+          <span class="title">
+            <span class="noselect">Type</span>
+            <span class="sortorder"
+                  ng-if="vm.propertyName === 'type'"
+                  ng-class="{reverse: vm.reverse}">
+            </span>
+          </span>
+        </th>
+        <th class="cursor-pointer" ng-click="vm.sortBy('duration')">
+          <span class="title">
+            <span class="noselect">Duration</span>
+            <span class="sortorder"
+                  ng-if="vm.propertyName === 'duration'"
+                  ng-class="{reverse: vm.reverse}">
+            </span>
+          </th>
+          </span>
+        <th>Comment</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="activity in vm.activities | orderBy:vm.propertyName:vm.reverse | filter: {type: vm.activityFilter}:true">
+        <th scope="row">
+        {{activity.id}}
+        </th>
+        <td>
+          {{activity.title}}
+        </td>
+        <td>
+          {{activity.date | date:'medium'}}
+        </td>
+        <td>
+          {{vm.activitesPlaceholder[activity.type]}}
+        </td>
+        <td>
+          {{activity.duration}}
+        </td>
+        <td>
+          {{activity.comment}}
+        </td>
+      </tr>
+    </tbody>
+  </table> -->
+
+
+
+
+</div>

@@ -14,14 +14,14 @@ var lrSnippet = require('connect-livereload')({
   port: LIVERELOAD_PORT
 });
 
-var mountFolder = function(connect, dir) {
+var mountFolder = function (connect, dir) {
   return require('serve-static')(require('path').resolve(dir));
 };
 
 /**
  * Grunt module
  */
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
   /**
    * Dynamically load npm tasks
@@ -94,7 +94,7 @@ module.exports = function(grunt) {
       },
       livereload: {
         options: {
-          middleware: function(connect) {
+          middleware: function (connect) {
             return [lrSnippet, mountFolder(connect, 'app')];
           }
         }

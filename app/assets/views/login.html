@@ -1,0 +1,50 @@
+<div ng-controller="logInController as vm">
+  <h3>Login</h3>
+  <form name="logInForm" novalidate>
+    <div class="form-group"
+         ng-class="{'was-validated': logInForm.loginEmail.$touched === true && logInForm.loginEmail.$invalid === true}">
+      <label for="loginEmail">Email address</label>
+      <input type="email"
+             name="loginEmail"
+             id="loginEmail"
+             class="form-control form-control-lg"
+             aria-describedby="emailHelp"
+             placeholder="Enter email"
+             ng-model="vm.loginUser.email"
+             required>
+      <div class="invalid-feedback">
+        Please provide a valid email.
+      </div>
+      <small id="emailHelp"
+             class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    <div class="form-group"
+         ng-class="{'was-validated': logInForm.loginPassword.$touched === true && logInForm.loginPassword.$invalid === true}">
+      <label for="loginPassword">Password</label>
+      <input type="text"
+             name="loginPassword"
+             id="loginPassword"
+             class="form-control form-control-lg"
+             aria-describedby="loginPassword"
+             placeholder="Password"
+             ng-model="vm.loginUser.password"
+             required>
+      <div class="invalid-feedback">
+        Your password is required.
+      </div>
+    </div>
+    <div class="form-group">
+      <button type="button"
+               class="btn btn-primary btn-lg"
+               ng-disabled="logInForm.$invalid"
+               ng-click="vm.login()">Log in
+      </button>
+      <div class="invalid-feedback"
+           ng-class="{'display-block': logInForm.$submitted === true && vm.loginUser.found === false}">
+        Your email or password is incorrect.
+      </div>
+    </div>
+  </form>
+
+  sing up <a style="text-decoration: underline;" ui-sref="signup">here</a>
+</div>

@@ -1,0 +1,26 @@
+<div id="carouselControls" class="carousel slide carousel-fade" data-ride="carousel">
+  <div class="carousel-inner">
+    <ol class="carousel-indicators">
+      <li ng-repeat="item in vm.carousel track by $index" class="carousel-indicator" data-target="#carouselIndicators"
+        data-slide-to="{{$index}}"></li>
+    </ol>
+    <div ng-repeat="item in vm.carousel" class="carousel-item">
+      <div class="carousel-item-div-background" style="background-image:url('{{item.imageUrl}}')">
+      </div>
+      <div class="carousel-caption d-none d-md-block">
+        <h3>{{item.title}}</h3>
+        <p>{{item.message}}</p>
+      </div>
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true">
+    </span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true">
+    </span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>

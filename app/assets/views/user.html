@@ -1,0 +1,81 @@
+<div ng-controller="userController as vm">
+  <h1>User page</h1>
+  isUserLoggedIn: {{vm.isUserLoggedIn}}
+
+<!--
+  <pre>current user id:{{vm.currentUser | json}}</pre>
+<pre>editUser:{{vm.editUser | json}}</pre>
+  <pre>user details :{{vm.currentUserDetails | json}}</pre> -->
+
+  <!-- <form name="userDetailsForm" novalidate>
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input type="text"
+             name="firstName"
+             id="firstName"
+             class="form-control form-control-lg"
+             placeholder="{{vm.currentUserDetails.first_name}}"
+             ng-model="vm.currentUserDetails.first_name"
+             ng-disabled="!vm.editUser"
+             required>
+      <div class="invalid-feedback">
+        Please type in your first name.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input type="text"
+             name="lastName"
+             id="lastName"
+             class="form-control form-control-lg"
+             placeholder="{{vm.currentUserDetails.last_name}}"
+             ng-model="vm.currentUserDetails.last_name"
+             ng-disabled="!vm.editUser"
+             required>
+      <div class="invalid-feedback">
+        Please type in your last name.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="email">email</label>
+      <input type="email"
+             name="email"
+             id="email"
+             class="form-control form-control-lg"
+             placeholder="{{vm.currentUserDetails.email}}"
+             ng-model="vm.currentUserDetails.email"
+             ng-disabled="!vm.editUser"
+             required>
+      <div class="invalid-feedback">
+        Please type in a valid email.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="password">password</label>
+      <input type="text"
+             name="password"
+             id="password"
+             class="form-control form-control-lg"
+             placeholder="{{vm.currentUserDetails.password}}"
+             ng-model="vm.currentUserDetails.password"
+             ng-disabled="!vm.editUser"
+             required>
+      <div class="invalid-feedback">
+        Please type in your password.
+      </div>
+    </div>
+    <button type="button"
+            class="btn btn-primary btn-lg"
+            ng-click="vm.editUserDetails()">Edit
+    </button>
+    <button type="button"
+            class="btn btn-primary btn-lg"
+            ng-disabled="!vm.editUser"
+            ng-click="vm.saveUserDetails()">Save
+    </button>
+
+  </form> -->
+
+<ng-include src="'/assets/views/userDetailsPartial.html'"></ng-include>
+
+</div>

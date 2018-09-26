@@ -1,0 +1,142 @@
+body {
+  // background: red
+  // font-size: 2rem
+}
+
+a.nav-link {
+  border-bottom: 2px solid transparent;
+  transition: 0.25s;
+  text-transform: capitalize;
+
+  &.active {
+    border-bottom-color: red;
+  }
+}
+
+
+.main {
+  margin-top: 1rem
+}
+
+.carousel-item-div-background {
+  width: 100%;
+  min-height: 50vh;
+  max-height: 70vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+// activities
+
+.activities-filters {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sortorder:after {
+  content: '\25b2';
+  // BLACK UP-POINTING TRIANGLE */
+}
+
+.sortorder.reverse:after {
+  content: '\25bc';
+  // BLACK DOWN-POINTING TRIANGLE */
+}
+
+th span.title {
+  display: flex;
+  justify-content: space-between;
+}
+
+// virtual repeat
+#vertical-container {
+  height: 292px;
+  width: 100%;
+}
+
+.repeated-item {
+  border-bottom: 1px solid #ddd;
+  box-sizing: border-box;
+  height: 40px;
+  padding-top: 10px;
+}
+
+md-content {
+  margin: 16px;
+}
+
+md-virtual-repeat-container,
+.table-header {
+  border: solid 1px hsl(0, 0%, 80%);
+
+  .table-row {
+    display: flex;
+    padding: 0;
+    margin: 0;
+
+    span {
+      display: block;
+      // flex: 1;
+      // background-color: hsla(197, 100%, 50%, 0.199);
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      padding: 4px;
+      overflow: hidden;
+    }
+  }
+
+}
+
+.md-virtual-repeat-container .md-virtual-repeat-offsetter div {}
+
+
+// generic
+
+.w-5 {
+  width: 5%
+}
+
+.w-7_5 {
+  width: 7.5%
+}
+
+.w-10 {
+  width: 10%
+}
+
+.w-15 {
+  width: 15%
+}
+
+.w-20 {
+  width: 20%
+}
+
+.w-40 {
+  width: 40%
+}
+
+.display-block {
+  display: block !important;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.noselect {
+  -webkit-touch-callout: none !important;
+  /* iOS Safari */
+  -webkit-user-select: none !important;
+  /* Safari */
+  -khtml-user-select: none !important;
+  /* Konqueror HTML */
+  -moz-user-select: none !important;
+  /* Firefox */
+  -ms-user-select: none !important;
+  /* Internet Explorer/Edge */
+  user-select: none !important;
+  /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}

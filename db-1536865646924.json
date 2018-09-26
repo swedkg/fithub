@@ -1,0 +1,61 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "first_name": "Sebastian",
+      "last_name": "Eschweiler",
+      "email": "sebastian@codingthesmartway.com",
+      "password": 123
+    },
+    {
+      "id": 2,
+      "first_name": "Steve",
+      "last_name": "Palmer",
+      "email": "steve@codingthesmartway.com",
+      "password": 123
+    },
+    {
+      "id": 3,
+      "first_name": "Ann",
+      "last_name": "Smith",
+      "email": "ann@codingthesmartway.com",
+      "password": 123
+    },
+    {
+      "first_name": "Dimitrios",
+      "last_name": "Giannopoulos",
+      "email": "dimitrios.giannopoulos@gmail.com",
+      "password": "123",
+      "id": 4
+    }
+  ],
+  "activities_logs": [
+    {
+      "id": 1,
+      "title": "activity title",
+      "date": "activity date",
+      "duration": "activity duration",
+      "comment": "activity comment",
+      "type": "fk(activities_types.id)",
+      "user": "fk(users.id)"
+    }
+  ],
+  "activities_types": [
+    {
+      "id": 1,
+      "label": "running"
+    },
+    {
+      "id": 2,
+      "label": "jogging"
+    },
+    {
+      "id": 3,
+      "label": "swimming"
+    },
+    {
+      "id": 4,
+      "label": "rafting"
+    }
+  ]
+}
