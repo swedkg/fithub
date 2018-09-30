@@ -20,18 +20,28 @@
   </div>
 </div>
 
-<md-virtual-repeat-container id="vertical-container" class="mb-5">
-  <div md-virtual-repeat="activity in vm.activities" md-on-demand="true" class="repeated-item" flex="">
-    <div class="table-row">
-      <span class="id w-5 noselect">{{activity.id}}</span>
-      <span class="title w-25 noselect">{{activity.title}}</span>
-      <span class="date w-15 noselect">{{activity.date | date:'MMM d, y H:m'}}</span>
-      <span class="label w-7_5 noselect">{{vm.activitiesFilters[activity.type].label}}</span>
-      <span class="duration w-7_5 noselect">{{activity.duration}}</span>
-      <span class="comment w-40 noselect">{{activity.comment}}</span>
-    </div>
+<div class="position-relative">
+  <div layout="row" layout-align="space-around" class="progress-circular-holder">
+    <md-progress-circular ng-if="!vm.disableProgressBar" ng-disabled="vm.disableProgressBar" md-diameter="200"></md-progress-circular>
   </div>
-</md-virtual-repeat-container>
 
-<button type="button" class="btn btn-primary btn-lg " ng-click="vm.addActivity()">Add activity
-</button>
+  <md-virtual-repeat-container
+    id="vertical-container"
+    md-auto-shrink-min=8
+    class="mb-5">
+    <div md-virtual-repeat="activity in vm.activities" md-on-demand="true" class="repeated-item" flex="">
+      <div class="table-row">
+        <span class="id w-5 noselect">{{activity.id}}</span>
+<span class="title w-25 noselect" ui-sref="activity.id" ng-click="vm.viewActivity($event, activity)">
+          <a href="">
+            {{activity.title}}
+          </a></span>
+        <span class="date w-15 noselect">{{activity.date | date:'MMM d, y H:m'}}</span>
+        <span class="label w-7_5 noselect">{{vm.activitiesFilters[activity.type].label}}</span>
+        <span class="duration w-7_5 noselect">{{activity.duration}}</span>
+        <span class="comment w-40 noselect">{{activity.comment}}</span>
+      </div>
+    </div>
+  </md-virtual-repeat-container>
+</div>
+

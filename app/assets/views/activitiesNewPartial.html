@@ -1,0 +1,21 @@
+<pre>newActivity: {{newActivity | json}}</pre>
+
+<form action="">
+<input type="text"
+       ng-model="newActivity.title"
+       >Title
+<md-datepicker ng-model="newActivity.date"></md-datepicker>
+<!-- <input type="date"
+       ng-model="newActivity.date"
+       >Date -->
+<input type="number"
+       ng-model="newActivity.type"
+       >Type
+<input type="time"
+       ng-model="newActivity.duration"
+       >Duration
+<input type="text"
+       ng-model="newActivity.comment"
+       >Comment
+<button type="submit" ng-click="addActivity()">Submit</button>
+</form>

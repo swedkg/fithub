@@ -1,0 +1,38 @@
+<h1>view activity</h1>
+vm: {{activity | json}}
+vm: {{currentUser | json}}
+
+<md-content layout="column" layout-padding="">
+  <div>
+    <md-input-container>
+      <label>Title</label>
+      <input ng-model="activity.title">
+    </md-input-container>
+  </div>
+  <div>
+    <md-input-container>
+      <label>Date</label>
+      <!-- <md-datepicker ng-model="activity.date">{{activity.date}}</md-datepicker> -->
+      <input ng-model="activity.date">
+    </md-input-container>
+  </div>
+  <div>
+    <md-input-container>
+      <label>Duration</label>
+      <!-- <md-datepicker ng-model="activity.date">{{activity.date}}</md-datepicker> -->
+      <input ng-model="activity.duration">
+    </md-input-container>
+  </div>
+  <div>
+    <md-input-container>
+      <label>Type</label>
+      <!-- <md-datepicker ng-model="activity.date">{{activity.date}}</md-datepicker> -->
+      <!-- <input ng-model="activity.type"> -->
+      <md-select md-container-class="activities" ng-model="activity.type">
+        <md-option ng-repeat="activityType in activitiesFilters" value="{{activityType.id}}">
+          {{activityType.label}}
+        </md-option>
+      </md-select>
+    </md-input-container>
+  </div>
+</md-content>

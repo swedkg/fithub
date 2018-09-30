@@ -1,36 +1,35 @@
 'use strict'
 
-function activitiesController ($rootScope, $timeout, $interval, activitiesResourceFactory, $resource, userResourceFactory, activityTypesFactory) {
+function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResourceFactory, $resource, userResourceFactory, activityTypesFactory) {
   var vm = this;
   vm.$onInit = onInit;
 
-  function onInit() {
-
+  function onInit () {
     vm.something = "activities here"
     vm.editActivity = editActivity;
     vm.saveActivity = saveActivity;
     vm.deleteActivity = deleteActivity;
-    vm.addActivity = addActivity;
     vm.filterActivity = filterActivity;
     vm.sortBy = sortBy;
     vm.searchActivities = searchActivities;
+    vm.addActivity = addActivity;
+    vm.viewActivity = viewActivity;
 
     vm.activities = []
     vm.activitiesTypes = {};
     vm.activitesPlaceholder = {};
     vm.currentUserActivitiesTypes = [];
     vm.activitiesFilters = [];
-
-    // TODO: remove hard coded user ID
+        // TODO: remove hard coded user ID
     vm.currentUser = $rootScope.currentUser = 4
+
+    // vm.addActivity = false;
     vm.editMode = false;
     vm.reverse = false;
     vm.order = 'asc';
-    vm.propertyName = 'id';
+    vm.propertyName = 'date';
     vm.disableProgressBar = true;
 
-    vm.simulateQuery = false;
-    vm.isDisabled = false;
 
     // TODO: sorting, filtering presentation of single activity
     // TODO: datepicker
@@ -218,16 +217,35 @@ function activitiesController ($rootScope, $timeout, $interval, activitiesResour
       })
     }
 
-    function addActivity() {
-      var newActivity = new activitiesResourceFactory();
-      newActivity.$save(function () {
-        Activities = activitiesResourceFactory.query(function () {
-          console.log('finished')
-          vm.currentActivity = Activities[Activities.length - 1]
-          vm.editActivityId = vm.currentActivity.id
-          vm.editMode = true;
-        })
+    function addActivity(ev) {
+      $mdDialog.show({
+        locals: {
+          userId: vm.currentUser
+        },
+        bindToController: true,
+        controller: addActivityController,
+        templateUrl: '/assets/views/activitiesNewPartial.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose: true,
       })
+    }
+
+    function viewActivity(ev, activity) {
+      console.log(arguments);
+      $mdDialog.show({
+        locals: {
+          activity: activity,
+          activitiesFilters: vm.activitiesFilters
+        },
+        bindToController: true,
+        controller: viewActivityController,
+        templateUrl: '/assets/views/activities-show.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose: true,
+      })
+
     }
 
     function buildArrayFromResource(resource) {
@@ -293,7 +311,6 @@ function activitiesController ($rootScope, $timeout, $interval, activitiesResour
      */
 
     function searchActivities () {
-      vm.disableProgressBar = false;
       vm.activities.refresh();
     }
 
@@ -335,6 +352,7 @@ function activitiesController ($rootScope, $timeout, $interval, activitiesResour
     };
 
     DynamicItems.prototype.fetchPage_ = function (pageNumber) {
+      vm.disableProgressBar = false;
       // Set the page to null so we know it is already being fetched.
       this.loadedPages[pageNumber] = null;
 
@@ -345,7 +363,8 @@ function activitiesController ($rootScope, $timeout, $interval, activitiesResour
       var Activities = activitiesResourceFactory.get({
         type: vm.activityFilter,
         q: vm.searchTerm,
-        _page: pageNumber,
+        user: vm.currentUser,
+        _page: pageNumber + 1,
         _order: vm.order,
         _sort: vm.sortByProperty,
         _limit: this.PAGE_SIZE
@@ -360,9 +379,7 @@ function activitiesController ($rootScope, $timeout, $interval, activitiesResour
         for (var i = pageOffset; i < pageOffset + resultsArray.length; i++) {
           this.loadedPages[pageNumber].push(this.results[i]);
         }
-        this.pageNumber = pageNumber
-        console.log('fetchPage_', pageNumber + 1, this.results);
-
+        vm.disableProgressBar = true;
       }));
     };
 
@@ -371,7 +388,8 @@ function activitiesController ($rootScope, $timeout, $interval, activitiesResour
       var Activities = activitiesResourceFactory.get({
         type: vm.activityFilter,
         q: vm.searchTerm,
-        _page: this.pageNumber,
+        user: vm.currentUser,
+        // _page: this.pageNumber,
         _order: vm.order,
         _sort: vm.sortByProperty,
         _limit: this.PAGE_SIZE
@@ -383,9 +401,7 @@ function activitiesController ($rootScope, $timeout, $interval, activitiesResour
       // $http request.
       Activities.$promise.then(angular.bind(this, function () {
         this.numItems = xTotalCount;
-        vm.disableProgressBar = true;
-        console.log('fetchNumItems_', this.pageNumber);
-
+        vm.disableProgressBar = false;
       }));
     };
 
@@ -393,18 +409,79 @@ function activitiesController ($rootScope, $timeout, $interval, activitiesResour
       this.loadedPages = {};
       this.numItems = 0;
       this.results = [];
-      this.pageNumber = 0;
+      this.pageNumber = undefined;
       this.fetchNumItems_();
     }
 
     vm.activities = new DynamicItems();
 
+    function addActivityController ($scope, $mdDialog, activitiesResourceFactory) {
+      var self = this;
+      $scope.newActivity = {};
+
+      // TODO: remove hard coded user ID
+      $scope.newActivity.user = self.userId;
+      console.log($scope, vm);
+      $scope.hide = function () {
+        $mdDialog.hide();
+      };
+
+      $scope.cancel = function () {
+        $mdDialog.cancel();
+      };
+
+      $scope.addActivity = function () {
+        console.log($scope.newActivity)
+        // return null;
+        var NewActivity = new activitiesResourceFactory();
+        NewActivity.title = $scope.newActivity.title;
+        NewActivity.date = $scope.newActivity.date.getTime();
+        NewActivity.type = $scope.newActivity.type;
+        NewActivity.duration = $scope.newActivity.ducation;
+        NewActivity.comment = $scope.newActivity.comment;
+        NewActivity.user = $scope.newActivity.user;
+        console.log(NewActivity);
+
+
+        NewActivity.$save(function () {
+          console.log('finished')
+          $scope.hide()
+          vm.activities.refresh();
+        })
+      }
+
+    }
+
+    function viewActivityController ($scope, $mdDialog, $state) {
+      var self = this;
+
+      $scope.activity = self.activity;
+      $scope.activitiesFilters = self.activitiesFilters.slice(1,self.activitiesFilters.length);
+
+      // TODO: remove hard coded user ID
+      $scope.user = $rootScope.currentUser
+      console.log(self, $scope);
+
+      $state.go('activities', {
+        id: $scope.activity.id
+      })
+
+      $scope.hide = function () {
+        $mdDialog.hide();
+      };
+
+      $scope.cancel = function () {
+        $mdDialog.cancel();
+      };
+
+
+    }
   }
 
   self.viewName = 'activitiesController';
 }
 
-activitiesController.$inject = ['$rootScope', '$timeout', '$interval', 'activitiesResourceFactory', '$resource', 'userResourceFactory', 'activityTypesFactory']
+activitiesController.$inject = ['$rootScope', '$timeout', '$mdDialog', 'activitiesResourceFactory', '$resource', 'userResourceFactory', 'activityTypesFactory']
 
 angular.module('fithub')
   .controller('activitiesController', activitiesController);
