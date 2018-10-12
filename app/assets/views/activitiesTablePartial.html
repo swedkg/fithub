@@ -1,22 +1,23 @@
 <div class="activities-filters tn-group-lg mb-5"
      role="group"
      aria-label="table of activites">
-  <button type="button"
-          class="btn btn-secondary"
-          ng-repeat="filter in vm.activitiesFilters"
-          ng-click="vm.filterActivity(filter.id)">
-    <span class="{{filter.className}}"></span>{{filter.label}}
-  </button>
+  <md-button type="button"
+             class="md-raised"
+             ng-repeat="filter in vm.activitiesFilters"
+             ng-click="vm.filterActivity(filter.id)">
+      <span class="{{filter.className}}"></span>
+      <span class="filter-label" ng-class="{'active': vm.activityFilter === filter.id}">{{filter.label}}</span>
+  </md-button>
 </div>
 
 <div class="table-header">
-  <div class="table-row">
-    <span class="id w-5" ng-click="vm.sortBy('id')">id</span>
-    <span class="title w-25" ng-click="vm.sortBy('title')">title</span>
-    <span class="date w-15" ng-click="vm.sortBy('date')">date</span>
-    <span class="label w-7_5" ng-click="vm.sortBy('type')">type</span>
-    <span class="duration w-7_5" ng-click="vm.sortBy('duration')">duration</span>
-    <span class="comment w-40">comment</span>
+  <div layout="row" layout-padding>
+    <!-- <span class="id w-5" ng-click="vm.sortBy('id')">id</span> -->
+    <span flex="25" class="title" ng-click="vm.sortBy('title')">title</span>
+    <span flex="15" class="date" ng-click="vm.sortBy('date')">date</span>
+    <span flex="10" class="label" ng-click="vm.sortBy('type')">type</span>
+    <span flex="10" class="duration" ng-click="vm.sortBy('duration')">duration</span>
+    <span flex="40" class="comment">comment</span>
   </div>
 </div>
 
@@ -29,18 +30,22 @@
     id="vertical-container"
     md-auto-shrink-min=8
     class="mb-5">
-    <div md-virtual-repeat="activity in vm.activities" md-on-demand="true" class="repeated-item" flex="">
-      <div class="table-row">
-        <span class="id w-5 noselect">{{activity.id}}</span>
-<span class="title w-25 noselect" ui-sref="activity.id" ng-click="vm.viewActivity($event, activity)">
-          <a href="">
-            {{activity.title}}
-          </a></span>
-        <span class="date w-15 noselect">{{activity.date | date:'d MMM, y HH:mm'}}</span>
-        <span class="label w-7_5 noselect">{{vm.activitiesFilters[activity.type].label}}</span>
-        <span class="duration w-7_5 noselect">{{activity.duration | date:'HH:mm:ss'}}</span>
-        <span class="comment w-40 noselect">{{activity.comment}}</span>
-      </div>
+    <div md-virtual-repeat="activity in vm.activities"
+         md-on-demand="true"
+         layout="row"
+         layout-padding
+         class="repeated-item"
+         md-item-size="52">
+      <!-- <span flex="5" class="id noselect">{{activity.id}}</span> -->
+      <span flex="25" class="title noselect" ui-sref="activity.id" ng-click="vm.viewActivity($event, activity)">
+        <a href="">{{activity.title}}</a>
+      </span>
+      <span flex="15" class="date noselect">{{activity.date | date:'d MMM, y HH:mm'}}</span>
+      <span flex="10" class="label noselect">
+        <span class="{{vm.activitiesFilters[activity.type].className}}"></span>{{vm.activitiesFilters[activity.type].label}}
+      </span>
+      <span flex="10" class="duration noselect">{{activity.duration | date:'HH:mm:ss'}}</span>
+      <span flex="40" class="comment noselect truncate">{{activity.comment}}</span>
     </div>
   </md-virtual-repeat-container>
 </div>

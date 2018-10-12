@@ -31,7 +31,20 @@ a.nav-link {
 .activities-filters {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
+}
+
+.filter-label {
+  border-bottom: 1px solid transparent;
+  text-transform: capitalize;
+  &.active {
+    border-bottom: 1px solid red;
+  }
+}
+
+button.add-activity {
+  min-height: unset;
+  height: 36px;
 }
 
 .sortorder:after {
@@ -82,8 +95,8 @@ th span.title {
 .repeated-item {
   border-bottom: 1px solid #ddd;
   box-sizing: border-box;
-  height: 40px;
-  padding-top: 10px;
+  // height: 40px;
+  // padding-top: 10px;
 }
 
 md-content {
@@ -160,6 +173,12 @@ md-virtual-repeat-container,
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .noselect {

@@ -29,9 +29,11 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
     // vm.addActivity = false;
     vm.editMode = false;
     vm.reverse = false;
-    vm.order = 'asc';
+    vm.order = 'desc';
     vm.propertyName = 'date';
     vm.disableProgressBar = true;
+    vm.activityFilter = 0;
+    vm.sortByProperty = 'date';
 
 
     // TODO: sorting, filtering presentation of single activity
@@ -158,7 +160,7 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
     }
 
     function filterActivity (id) {
-      vm.activityFilter = (id === 0) ? undefined : id
+      vm.activityFilter = (id === 0) ? 0 : id
       vm.activities.refresh();
     }
 
@@ -376,8 +378,10 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
       // promise. In real code, this function would likely contain an
       // $http request.
 
+      var activityFilter = (vm.activityFilter === 0) ? undefined : vm.activityFilter;
+
       var Activities = activitiesResourceFactory.get({
-        type: vm.activityFilter,
+        type: activityFilter,
         q: vm.searchTerm,
         user: vm.currentUser,
         _page: pageNumber + 1,
@@ -401,8 +405,9 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
 
     DynamicItems.prototype.fetchNumItems_ = function () {
       var xTotalCount;
+      var activityFilter = (vm.activityFilter === 0) ? undefined : vm.activityFilter;
       var Activities = activitiesResourceFactory.get({
-        type: vm.activityFilter,
+        type: activityFilter,
         q: vm.searchTerm,
         user: vm.currentUser,
         // _page: this.pageNumber,
