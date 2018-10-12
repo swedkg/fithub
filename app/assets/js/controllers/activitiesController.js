@@ -1,6 +1,6 @@
 'use strict'
 
-function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResourceFactory, $resource, userResourceFactory, activityTypesFactory) {
+function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResourceFactory, $resource, userResourceFactory, activityTypesFactory, $state) {
   var vm = this;
   vm.$onInit = onInit;
 
@@ -14,6 +14,8 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
     vm.searchActivities = searchActivities;
     vm.addActivity = addActivity;
     vm.viewActivity = viewActivity;
+    vm.convertDate2Epoch = convertDate2Epoch;
+    vm.convertDuration2Epoch = convertDuration2Epoch;
 
     vm.activities = []
     vm.activitiesTypes = {};
@@ -22,6 +24,7 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
     vm.activitiesFilters = [];
         // TODO: remove hard coded user ID
     vm.currentUser = $rootScope.currentUser = 4
+    // vm.currentUser = $rootScope.currentUser
 
     // vm.addActivity = false;
     vm.editMode = false;
@@ -38,7 +41,7 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
     // TODO: remove contact, about
 
     if (typeof vm.currentUser == 'undefined')
-      return null;
+      $state.go('home')
 
 
 
@@ -195,11 +198,14 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
 
       console.log(activity)
       // activity.content = 'content'
+
+      delete activity.filterDate;
+      delete activity.filterDuration;
       activity.$update(function () {
-        Activities = activitiesResourceFactory.query()
-        vm.editActivityId = '';
-        vm.currentActivity = {};
+        vm.activities.refresh();
         vm.editMode = false;
+        activity.filterDate = new Date(activity.date);
+        activity.filterDuration = new Date(activity.duration);
       })
 
       // activity.$promise.then(function (param) {
@@ -210,40 +216,50 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
     }
 
     function deleteActivity(activity) {
-      activity.$delete(function (params) {
-        Activities = activitiesResourceFactory.query()
-        vm.currentActivity = {}
-        vm.editMode = false;
+      activity.$delete(function () {
+        vm.activities.refresh();
+        // Activities = activitiesResourceFactory.query()
+        // vm.currentActivity = {}
+        // vm.editMode = false;
       })
     }
 
     function addActivity(ev) {
       $mdDialog.show({
         locals: {
-          userId: vm.currentUser
+          userId: vm.currentUser,
+          activitiesFilters: vm.activitiesFilters
         },
         bindToController: true,
         controller: addActivityController,
-        templateUrl: '/assets/views/activitiesNewPartial.html',
-        parent: angular.element(document.body),
+        templateUrl: '/assets/views/activities-show.html',
+        // parent: angular.element(document.body),
+        fullscreen: true,
         targetEvent: ev,
         clickOutsideToClose: true,
       })
     }
 
     function viewActivity(ev, activity) {
-      console.log(arguments);
+      // console.log(arguments);
+      var parent = angular.element(document.body);
+
       $mdDialog.show({
         locals: {
           activity: activity,
-          activitiesFilters: vm.activitiesFilters
+          activitiesFilters: vm.activitiesFilters,
+          editMode: vm.editMode
         },
         bindToController: true,
         controller: viewActivityController,
         templateUrl: '/assets/views/activities-show.html',
-        parent: angular.element(document.body),
+        parent: parent,
         targetEvent: ev,
+        fullscreen: true,
         clickOutsideToClose: true,
+        onRemoving: function ($event) {
+          vm.activities.refresh()
+        }
       })
 
     }
@@ -415,13 +431,23 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
 
     vm.activities = new DynamicItems();
 
+    function convertDate2Epoch(date) {
+      return date.getTime();
+    }
+    function convertDuration2Epoch (date) {
+      return new Date(date).getTime();
+    }
+
     function addActivityController ($scope, $mdDialog, activitiesResourceFactory) {
       var self = this;
       $scope.newActivity = {};
+      $scope.isViewActivity = false;
 
       // TODO: remove hard coded user ID
       $scope.newActivity.user = self.userId;
-      console.log($scope, vm);
+      $scope.activitiesFilters = self.activitiesFilters.slice(1, self.activitiesFilters.length);
+
+      // console.log($scope, vm);
       $scope.hide = function () {
         $mdDialog.hide();
       };
@@ -431,7 +457,6 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
       };
 
       $scope.addActivity = function () {
-        console.log($scope.newActivity)
         // return null;
         var NewActivity = new activitiesResourceFactory();
         NewActivity.title = $scope.newActivity.title;
@@ -452,19 +477,61 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
 
     }
 
-    function viewActivityController ($scope, $mdDialog, $state) {
+    function viewActivityController ($scope, $mdDialog, $state, $filter) {
       var self = this;
 
+
+      $scope.isViewActivity = true;
+      $scope.editMode = false;
       $scope.activity = self.activity;
-      $scope.activitiesFilters = self.activitiesFilters.slice(1,self.activitiesFilters.length);
+      $scope.activity.filterDate = $filter('date')($scope.activity.date, 'd MMM, y H:mm');
+      // $scope.activity.filterDuration = $filter('date')($scope.activity.duration, 'd MMM,y HH:MM:ss');
+      $scope.activity.filterDuration = new Date($scope.activity.duration);
+      $scope.convertDate2Epoch = function (date) {
+        $scope.activity.date = vm.convertDate2Epoch(date)
+      }
+      $scope.convertDuration2Epoch = function (date) {
+        $scope.activity.duration = vm.convertDuration2Epoch(date)
+        $scope.activity.filterDuration = new Date($scope.activity.duration);
+      }
+      var activityCopy = angular.copy(self.activity);
+
+      // {{activity.date | date:'MMM d, y H:m'}}
+      $scope.activitiesFilters = self.activitiesFilters.slice(1, self.activitiesFilters.length);
+
+
 
       // TODO: remove hard coded user ID
       $scope.user = $rootScope.currentUser
-      console.log(self, $scope);
+      // console.log(self, $scope);
 
-      $state.go('activities', {
-        id: $scope.activity.id
-      })
+      $scope.reset = function () {
+        $scope.activity.title = activityCopy.title;
+        $scope.activity.date = activityCopy.date;
+        $scope.activity.filterDate = $filter('date')(activityCopy.date, 'MMM d, y H:m');
+        $scope.activity.duration = activityCopy.duration;
+        $scope.activity.filterDuration = activityCopy.filterDuration;
+        $scope.activity.comment = activityCopy.comment;
+        $scope.activity.type = activityCopy.type;
+      }
+
+      $scope.edit = function () {
+        $scope.editMode = true;
+      }
+
+      $scope.saveActivity = function (activity) {
+        vm.saveActivity(activity);
+        $scope.hide();
+      }
+
+      $scope.delete = function (activity) {
+        vm.deleteActivity(activity)
+        $scope.hide();
+      }
+
+      // $state.go('activities', {
+      //   id: $scope.activity.id
+      // })
 
       $scope.hide = function () {
         $mdDialog.hide();
@@ -481,7 +548,7 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
   self.viewName = 'activitiesController';
 }
 
-activitiesController.$inject = ['$rootScope', '$timeout', '$mdDialog', 'activitiesResourceFactory', '$resource', 'userResourceFactory', 'activityTypesFactory']
+activitiesController.$inject = ['$rootScope', '$timeout', '$mdDialog', 'activitiesResourceFactory', '$resource', 'userResourceFactory', 'activityTypesFactory', '$state']
 
 angular.module('fithub')
   .controller('activitiesController', activitiesController);

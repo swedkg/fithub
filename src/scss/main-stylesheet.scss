@@ -30,6 +30,7 @@ a.nav-link {
 
 .activities-filters {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
 }
 
@@ -47,13 +48,30 @@ a.nav-link {
   md-select-menu {
     background-color: #ffffff
   }
-
 }
 
 th span.title {
   display: flex;
   justify-content: space-between;
 }
+
+// material overrides
+// md-dialog.md-dialog-fullscreen {
+//   max-width: 100%;
+//   max-height: 100%;
+//   width: 100%;
+//   height: 100%;
+//   border-radius: 0;
+// }
+
+// md-dialog,
+// md-input-container {
+//   width: 100%;
+//   max-width: unset;
+// }
+// md-input-container {
+//   // width: 100%
+// }
 
 // virtual repeat
 #vertical-container {
@@ -69,7 +87,7 @@ th span.title {
 }
 
 md-content {
-  margin: 16px;
+  // margin: 16px;
 }
 
 md-virtual-repeat-container,

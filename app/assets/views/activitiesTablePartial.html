@@ -36,9 +36,9 @@
           <a href="">
             {{activity.title}}
           </a></span>
-        <span class="date w-15 noselect">{{activity.date | date:'MMM d, y H:m'}}</span>
+        <span class="date w-15 noselect">{{activity.date | date:'d MMM, y HH:mm'}}</span>
         <span class="label w-7_5 noselect">{{vm.activitiesFilters[activity.type].label}}</span>
-        <span class="duration w-7_5 noselect">{{activity.duration}}</span>
+        <span class="duration w-7_5 noselect">{{activity.duration | date:'HH:mm:ss'}}</span>
         <span class="comment w-40 noselect">{{activity.comment}}</span>
       </div>
     </div>

@@ -77,11 +77,11 @@
     },
     {
       "id": 6,
-      "title": "adipiscing. Mauris molestie",
-      "date": 1566298802000,
-      "duration": 66,
+      "title": "now we save again",
+      "date": 1530442800000,
+      "duration": -3532000,
       "comment": "neque pellentesque massa lobortis ultrices.",
-      "type": 5,
+      "type": "9",
       "user": 4
     },
     {
@@ -113,9 +113,9 @@
     },
     {
       "id": 10,
-      "title": "tortor.",
-      "date": 1523301470000,
-      "duration": 72,
+      "title": "edit another one",
+      "date": 1523215020000,
+      "duration": 187000,
       "comment": "Donec tempus, lorem fringilla ornare placerat, orci",
       "type": 9,
       "user": 4
@@ -130,40 +130,23 @@
       "user": 3
     },
     {
-      "id": 12,
-      "title": "et, lacinia vitae, sodales",
-      "date": 1529309939000,
-      "duration": 25,
-      "comment": "massa non",
-      "type": 6,
-      "user": 4
-    },
-    {
-      "id": 13,
-      "title": "Donec",
-      "date": 1549922210000,
-      "duration": 85,
-      "comment": "natoque penatibus et magnis dis parturient montes, nascetur",
-      "type": 7,
-      "user": 4
-    },
-    {
       "id": 14,
-      "title": "semper",
-      "date": 1528265578000,
-      "duration": 86,
-      "comment": "vitae, orci. Phasellus dapibus quam quis diam. Pellentesque habitant morbi",
-      "type": 10,
+      "title": "we just edited this",
+      "date": 1528870320000,
+      "duration": -3567000,
+      "comment": "we also count",
+      "type": "9",
       "user": 4
     },
     {
       "id": 15,
       "title": "tincidunt pede ac urna.",
       "date": 1517660699000,
-      "duration": 79,
+      "duration": -3053000,
       "comment": "convallis erat, eget tincidunt dui augue eu",
       "type": 5,
-      "user": 4
+      "user": 4,
+      "filterDate": "3 Feb, 2018 13:24"
     },
     {
       "id": 16,
@@ -178,19 +161,11 @@
       "id": 17,
       "title": "mauris a nunc.",
       "date": 1531265149000,
-      "duration": 67,
+      "duration": 40394000,
       "comment": "velit",
       "type": 5,
-      "user": 4
-    },
-    {
-      "id": 18,
-      "title": "mollis",
-      "date": 1522165289000,
-      "duration": 79,
-      "comment": "eu turpis. Nulla aliquet. Proin velit. Sed malesuada augue ut",
-      "type": 2,
-      "user": 4
+      "user": 4,
+      "filterDate": "11 Jul, 2018 1:25"
     },
     {
       "id": 19,
@@ -230,12 +205,13 @@
     },
     {
       "id": 23,
-      "title": "Nulla",
-      "date": 1525176598000,
-      "duration": 8,
-      "comment": "sollicitudin a, malesuada id, erat. Etiam",
-      "type": 12,
-      "user": 4
+      "title": "this one should be ok",
+      "date": 1525781340000,
+      "duration": 76020000,
+      "comment": "testing dates",
+      "type": "1",
+      "user": 4,
+      "filterDate": "8 May, 2018 14:09"
     },
     {
       "id": 24,
@@ -310,15 +286,6 @@
       "user": 4
     },
     {
-      "id": 32,
-      "title": "iaculis quis,",
-      "date": 1555711063000,
-      "duration": 27,
-      "comment": "enim.",
-      "type": 9,
-      "user": 4
-    },
-    {
       "id": 33,
       "title": "ipsum.",
       "date": 1539810740000,
@@ -338,12 +305,13 @@
     },
     {
       "id": 35,
-      "title": "hendrerit neque.",
-      "date": 1522827049000,
+      "title": "edit",
+      "date": 1522567800000,
       "duration": 38,
       "comment": "mauris id sapien. Cras dolor dolor, tempus",
       "type": 4,
-      "user": 4
+      "user": 4,
+      "filterDate": "Apr 1, 2018 9:30"
     },
     {
       "id": 36,
@@ -479,15 +447,6 @@
       "comment": "non, feugiat nec, diam.",
       "type": 6,
       "user": 2
-    },
-    {
-      "id": 51,
-      "title": "tortor.",
-      "date": 1509407646000,
-      "duration": 22,
-      "comment": "sodales at, velit. Pellentesque ultricies dignissim lacus. Aliquam rutrum lorem",
-      "type": 12,
-      "user": 4
     },
     {
       "id": 52,
