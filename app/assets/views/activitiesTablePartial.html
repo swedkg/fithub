@@ -1,25 +1,56 @@
-<div class="activities-filters tn-group-lg mb-5"
-     role="group"
-     aria-label="table of activites">
-  <md-button type="button"
-             class="md-raised"
-             ng-repeat="filter in vm.activitiesFilters"
-             ng-click="vm.filterActivity(filter.id)">
-      <span class="{{filter.className}}"></span>
-      <span class="filter-label" ng-class="{'active': vm.activityFilter === filter.id}">{{filter.label}}</span>
-  </md-button>
-</div>
+<div layout="row">
 
-<div class="table-header">
+  <md-menu>
+    <md-button class="display-flex text-transform__capitalize" ng-click="vm.openFilterActivitiesMenu($mdMenu, $event)">
+      <i class="material-icons mr-1 ">filter_list</i>Filter your activities
+    </md-button>
+    <md-menu-content>
+      <md-menu-item ng-repeat="filter in vm.activitiesFilters" ng-click="vm.filterActivity(filter.id)">
+        <md-button>
+          <span class="{{filter.className}}"></span>
+          <span class="filter-label" ng-class="{'active': vm.activityFilter === filter.id}">{{filter.label}}</span>
+        </md-button>
+      </md-menu-item>
+    </md-menu-content>
+  </md-menu>
+  <md-menu>
+    <md-button class="display-flex text-transform__capitalize" ng-click="vm.openOrderActivitiesMenu($mdMenu, $event)">
+      <i class="material-icons mr-1 ">reorder</i>Order your activities
+    </md-button>
+    <md-menu-content>
+      <md-menu-item ng-repeat="property in vm.sortByPropertyList" ng-click="vm.sortBy(property)">
+        <md-button>
+          <span class="filter-label" ng-class="{'active': vm.sortByProperty === property}">{{property}}</span>
+        </md-button>
+      </md-menu-item>
+      <md-divider class="m-2"></md-divider>
+      <md-menu-item>
+        <md-button ng-click="vm.orderBy('asc')">
+          <span ng-class="{'active': vm.order == 'asc'}" class="pb-1">Ascending</span>
+        </md-button>
+      </md-menu-item>
+      <md-menu-item>
+        <md-button ng-click="vm.orderBy('desc')">
+          <span ng-class="{'active': vm.order == 'desc'}" class="pb-1">Descending</span>
+        </md-button>
+      </md-menu-item>
+    </md-menu-content>
+  </md-menu>
+
+</div>
+<!-- <span class="sortorder" ng-if="vm.propertyName === 'date'" ng-class="{reverse: vm.reverse}">
+</span> -->
+
+<!-- <div class="table-header">
   <div layout="row" layout-padding>
-    <!-- <span class="id w-5" ng-click="vm.sortBy('id')">id</span> -->
+    <span class="id w-5" ng-click="vm.sortBy('id')">id</span>
     <span flex="25" class="title" ng-click="vm.sortBy('title')">title</span>
     <span flex="15" class="date" ng-click="vm.sortBy('date')">date</span>
     <span flex="10" class="label" ng-click="vm.sortBy('type')">type</span>
     <span flex="10" class="duration" ng-click="vm.sortBy('duration')">duration</span>
     <span flex="40" class="comment">comment</span>
   </div>
-</div>
+</div> -->
 
 <div class="position-relative">
   <div layout="row" layout-align="space-around" class="progress-circular-holder">
@@ -33,19 +64,26 @@
     <div md-virtual-repeat="activity in vm.activities"
          md-on-demand="true"
          layout="row"
-         layout-padding
-         class="repeated-item"
+         class="px-2"
          md-item-size="52">
-      <!-- <span flex="5" class="id noselect">{{activity.id}}</span> -->
-      <span flex="25" class="title noselect" ui-sref="activity.id" ng-click="vm.viewActivity($event, activity)">
-        <a href="">{{activity.title}}</a>
-      </span>
-      <span flex="15" class="date noselect">{{activity.date | date:'d MMM, y HH:mm'}}</span>
-      <span flex="10" class="label noselect">
-        <span class="{{vm.activitiesFilters[activity.type].className}}"></span>{{vm.activitiesFilters[activity.type].label}}
-      </span>
-      <span flex="10" class="duration noselect">{{activity.duration | date:'HH:mm:ss'}}</span>
-      <span flex="40" class="comment noselect truncate">{{activity.comment}}</span>
+      <div layout="column" flex="15" class="py-0">
+        <span class="label noselect">
+          <span class="{{vm.activitiesFilters[activity.type].className}}"></span>{{vm.activitiesFilters[activity.type].label}}
+        </span>
+      </div>
+      <div layout="column" layout-fill class="py-0">
+        <div layout="row">
+          <span class="title noselect mr-2" ui-sref="activity.id" ng-click="vm.viewActivity($event, activity)">
+            <a href="">{{activity.title}}</a>
+          </span>
+          <span class="date noselect mr-2">on {{activity.date | date:'d MMM, y HH:mm'}}</span>
+          <span class="duration noselect">for {{activity.duration | date:'HH:mm:ss'}}</span>
+        </div>
+        <div layout="row">
+          <span class="comment noselect truncate">{{activity.comment}}</span>
+        </div>
+        <md-divider ng-if="!$last" class="my-2"></md-divider>
+      </div>
     </div>
   </md-virtual-repeat-container>
 </div>

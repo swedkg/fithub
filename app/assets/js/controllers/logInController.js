@@ -12,11 +12,11 @@ function logInController ($rootScope, $scope, $state, userResourceFactory) {
 
     vm.login = login;
 
-    (function getUserList () {
-      usersList = users.query();
-      // console.clear();
-      console.log('getUserList', usersList)
-    })()
+    // (function getUserList () {
+    //   usersList = users.query();
+    //   // console.clear();
+    //   console.log('getUserList', usersList)
+    // })()
 
     vm.loginUser = {
       email: '',
@@ -25,6 +25,16 @@ function logInController ($rootScope, $scope, $state, userResourceFactory) {
     };
 
     function login () {
+
+      var User = userResourceFactory.save({
+        email: vm.loginUser.email,
+        password: vm.loginUser.password
+      })
+
+      User.$promise.then(console.log(User))
+
+      return null;
+
       var user = usersList.filter(function (user) {
         return user.email == vm.loginUser.email && user.password == vm.loginUser.password
       })

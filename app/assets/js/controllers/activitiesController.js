@@ -11,11 +11,14 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
     vm.deleteActivity = deleteActivity;
     vm.filterActivity = filterActivity;
     vm.sortBy = sortBy;
+    vm.orderBy = orderBy;
     vm.searchActivities = searchActivities;
     vm.addActivity = addActivity;
     vm.viewActivity = viewActivity;
     vm.convertDate2Epoch = convertDate2Epoch;
     vm.convertDuration2Epoch = convertDuration2Epoch;
+    vm.openFilterActivitiesMenu = openFilterActivitiesMenu;
+    vm.openOrderActivitiesMenu = openOrderActivitiesMenu;
 
     vm.activities = []
     vm.activitiesTypes = {};
@@ -30,17 +33,13 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
     vm.editMode = false;
     vm.reverse = false;
     vm.order = 'desc';
-    vm.propertyName = 'date';
     vm.disableProgressBar = true;
     vm.activityFilter = 0;
     vm.sortByProperty = 'date';
+    vm.sortByPropertyList = ['date', 'title', 'type', 'duration'];
 
 
-    // TODO: sorting, filtering presentation of single activity
-    // TODO: datepicker
-    // TODO: timepicker
     // TODO: graphs
-    // TODO: remove contact, about
 
     if (typeof vm.currentUser == 'undefined')
       $state.go('home')
@@ -165,9 +164,14 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
     }
 
     function sortBy(sortByProperty) {
-      vm.reverse = (vm.sortByProperty === sortByProperty) ? !vm.reverse : false;
-      vm.order = (vm.reverse) ? 'asc' : 'desc'
+      // vm.reverse = (vm.sortByProperty === sortByProperty) ? !vm.reverse : false;
+      // vm.order = (vm.reverse) ? 'asc' : 'desc'
       vm.sortByProperty = sortByProperty;
+      vm.activities.refresh();
+    }
+
+    function orderBy(order) {
+      vm.order = order
       vm.activities.refresh();
     }
 
@@ -435,6 +439,14 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
     }
 
     vm.activities = new DynamicItems();
+
+    function openFilterActivitiesMenu ($mdMenu, ev) {
+      $mdMenu.open(ev);
+    };
+
+    function openOrderActivitiesMenu ($mdMenu, ev) {
+      $mdMenu.open(ev);
+    };
 
     function convertDate2Epoch(date) {
       return date.getTime();

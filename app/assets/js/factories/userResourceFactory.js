@@ -10,6 +10,8 @@
 // };
 
 // http://localhost:3000/users/sign_in?user[email]=q@q.net&user[password]=12345678
+// http://localhost:3000/users/sign_in?user[email]=dimitrios.giannopoulos@gmail.com&user[password]=12345678
+
 
 function userResourceFactory ($resource) {
   var url = 'http://localhost:3000/users/';
@@ -32,13 +34,13 @@ function userResourceFactory ($resource) {
       get: {
         method: 'GET',
         isArray: false,
-        url: url + ':id'
+        url: url + 'sign_in?user[email]=' + ':email' + '&user[password]=' + ':password'
       },
       save: {
         method: 'POST',
         // isArray: true,
         // to be used in RoR
-        // url: url + 'sign_in?user[email]=' + ':email' + '&user[password]=' + ':password'
+        url: url + 'sign_in?user[email]=' + ':email' + '&user[password]=' + ':password'
       }
     })
 }
