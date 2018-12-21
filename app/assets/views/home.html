@@ -1,11 +1,70 @@
-<div ng-controller="homeController as vm">
-  <h1>{{vm.viewName}}</h1>
+<div ng-controller="homeController as vm" class="home-container">
 
   <carousel></carousel>
+  <section class="display-flex position-absolute w-100 t-0">
+    <div class="container motivational">
+      <blockquote class="align-items-center display-flex flex-column">
+        <q class="mb-0 text-white">Make each day your masterpiece.</q>
+        <cite class="text-white" title="Source Title">John Wooden</cite>
+        <button class="border-0 btn btn-lg btn-light btn-primary mt-5" ui-sref="signup">Register for free</button>
+      </blockquote>
+    </div>
+  </section>
 
-  we migh add some content here
 
-
+  <section>
+    <div class="jumbotron jumbotron-fluid progressbar-holder">
+      <div class="container position-relative z-index-10">
+        <h1 class="text-center text-white">Train The Right Way</h1>
+        <p class="text-center text-white font-weight-light">Confidence comes from the perfect strategy combined with the best training tools.
+        </p>
+        <ul class="progressbar" style="user-select: text;">
+          <li>
+            <div class="step">
+              <img src="/assets/img/chronometer-outline.svg" class="svg" alt="">
+              <p>Commit to a goal</p>
+              <small>Start by adding your event goals to guide your training strategy.</small>
+            </div>
+          </li>
+          <li>
+            <div class="step">
+              <img src="/assets/img/list.svg" class="svg" alt="">
+              <p>
+                Build your training
+              </p>
+              <small>Plan your training volume and intensity to create the right workouts at the right time.</small>
+            </div>
+          </li>
+          <li>
+            <div class="step">
+              <img src="/assets/img/strategy.svg" class="svg" alt="">
+              <p>
+                Work out smarter
+              </p>
+              <small>Export planned workouts and automatically sync the results back to your calendar.</small>
+            </div>
+          </li>
+          <li>
+            <div class="step">
+              <img src="/assets/img/winner-medal.svg" class="svg" alt="">
+              <p>
+                Track your progress
+              </p>
+              <small>Watch as your fitness improves and get rewarded for hitting Peak Performances along the way.</small>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-4">Fluid jumbotron</h1>
+        <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+      </div>
+    </div>
+  </section>
 
 
 

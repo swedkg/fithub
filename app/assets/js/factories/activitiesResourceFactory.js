@@ -18,12 +18,12 @@
 function activitiesResourceFactory ($resource) {
   // var url = 'http://localhost:3000/v1/activities/';
 
-  var url = 'http://localhost:3000/activities_logs/';
+  var url = 'http://localhost:3000/v1/activities/';
 
   return $resource(
     url,
     {
-      user: '@user',
+      user_id: '@user_id',
       id: '@id',
       'type': '@type',
       'q': '@q',
@@ -37,7 +37,7 @@ function activitiesResourceFactory ($resource) {
     {
       update: {
         method: 'PUT',
-        url: url + ':id'
+        url: url + '/' + ':id'
       },
       get: {
         method: 'GET',
@@ -47,13 +47,17 @@ function activitiesResourceFactory ($resource) {
       },
       delete: {
         method: 'DELETE',
-        url: url + ':id'
+        url: url + '/' + ':id'
       },
       save: {
         method: 'POST',
         // isArray: true,
         // to be used in RoR
         // url: url + 'sign_in?user[email]=' + ':email' + '&user[password]=' + ':password'
+      },
+      create: {
+        method: 'POST',
+        url: url
       }
     })
 

@@ -10,9 +10,16 @@
 // };
 
 function activityTypesFactory ($resource) {
-  var url = 'http://localhost:3000/activities_types/'
+  var url = 'http://localhost:3000/v1/activity_types/'
 
-  return $resource(url);
+  return $resource(url, {}, {
+    query: {
+      method: 'GET',
+      url: url,
+      isArray: true,
+      // headers: ':headers'
+    },
+  });
 }
 
 angular

@@ -3,15 +3,15 @@ angular
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
 
 
-    // $httpProvider.interceptors.push(function ($cookies) {
-    //   return {
-    //     'request': function (config) {
-    //       config.headers['X-USER-EMAIL'] = $cookies.get("user_email");
-    //       config.headers['X-USER-TOKEN'] = $cookies.get("user_token");
-    //       return config;
-    //     }
-    //   };
-    // });
+    $httpProvider.interceptors.push(function ($cookies) {
+      return {
+        'request': function (config) {
+          config.headers['X-USER-EMAIL'] = $cookies.get("user_email");
+          config.headers['X-USER-TOKEN'] = $cookies.get("user_token");
+          return config;
+        }
+      };
+    });
 
 
     $stateProvider
@@ -32,7 +32,7 @@ angular
       })
       .state('user', {
         url: '/user/:id',
-        controller: 'userController as ctrl',
+        // controller: 'userController as ctrl',
         params: {
           id: null
         },
@@ -40,17 +40,17 @@ angular
       })
       .state('activities', {
         url: '/activities',
-        controller: 'activitiesController as ctrl',
+        // controller: 'activitiesController as ctrl',
         templateUrl: '/assets/views/activities.html'
       })
       .state('login', {
         url: '/user/login',
-        controller: 'logInController as ctrl',
+        // controller: 'logInController as ctrl',
         templateUrl: '/assets/views/login.html'
       })
       .state('signup', {
         url: '/user/signup',
-        controller: 'signUpController as ctrl',
+        // controller: 'signUpController as ctrl',
         templateUrl: '/assets/views/signup.html'
       })
 
@@ -62,4 +62,6 @@ angular
     //   requireBase: true
     // });
 
+  }).run(function ($rootScope, $state) {
+    $rootScope.$state = $state;
   })

@@ -1,0 +1,39 @@
+<div class="activities-filters">
+  <md-menu>
+    <md-button class="display-flex text-capitalize" ng-click="vm.openFilterActivitiesMenu($mdMenu, $event)">
+      <i class="material-icons mr-1 ">filter_list</i>Filter
+    </md-button>
+    <md-menu-content>
+      <md-menu-item ng-repeat="filter in vm.activitiesFilters" ng-click="vm.filterActivity(filter.id)">
+        <md-button>
+          <span class="{{filter.className}}"></span>
+          <span class="filter-label" ng-class="{'active': vm.activityFilter === filter.id}">{{filter.label}}</span>
+        </md-button>
+      </md-menu-item>
+    </md-menu-content>
+  </md-menu>
+  <md-menu>
+    <md-button class="display-flex text-capitalize" ng-click="vm.openOrderActivitiesMenu($mdMenu, $event)">
+      <i class="material-icons mr-1 ">reorder</i>Order
+    </md-button>
+    <md-menu-content>
+      <md-menu-item ng-repeat="property in vm.sortByPropertyList" ng-click="vm.sortBy(property.type)">
+        <md-button>
+          <span class="filter-label" ng-class="{'active': vm.sortByProperty === property.type}">{{property.label}}</span>
+        </md-button>
+      </md-menu-item>
+      <md-divider class="m-2"></md-divider>
+      <md-menu-item>
+        <md-button ng-click="vm.orderBy('asc')">
+          <span ng-class="{'active': vm.order == 'asc'}" class="pb-1">Ascending</span>
+        </md-button>
+      </md-menu-item>
+      <md-menu-item>
+        <md-button ng-click="vm.orderBy('desc')">
+          <span ng-class="{'active': vm.order == 'desc'}" class="pb-1">Descending</span>
+        </md-button>
+      </md-menu-item>
+    </md-menu-content>
+  </md-menu>
+
+</div>

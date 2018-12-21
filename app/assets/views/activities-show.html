@@ -1,62 +1,60 @@
-<h1>view activity</h1>
-<pre>
-  vm: {{activity | json}}
-</pre>
 <!-- vm: {{currentUser | json}} -->
 
-<md-content layout="column" layout-padding>
-  <div layout=row>
-    <md-input-container>
-      <label>Title</label>
-      <input ng-model="activity.title" ng-disabled="!editMode">
-    </md-input-container>
+<md-content layout="column" layout-padding class="activity-show-main">
+  <md-input-container>
+    <label>Title</label>
+    <input ng-model="activity.title"
+           ng-disabled="!isEditActivity && !isAddActivity">
+  </md-input-container>
 
-    <md-input-container>
+  <div layout=row class="middle-row">
+
+    <md-input-container layout-align="start center">
       <label>Date</label>
       <md-datepicker
-      ng-disabled="!editMode"
-      ng-model="activity.filterDate"
-      ng-blur="convertDate2Epoch(activity.filterDate)">activity.filterDate</md-datepicker>
+        ng-disabled="!isEditActivity && !isAddActivity"
+        ng-model="activity.filterDate"
+        ng-blur="convertDate2Epoch(activity.filterDate)">activity.filterDate
+      </md-datepicker>
     </md-input-container>
-  </div>
 
     <md-input-container>
       <label>Duration</label>
       <input type="time"
+             class="time"
              ng-model="activity.filterDuration"
              ng-blur="convertDuration2Epoch(activity.filterDuration)"
              placeholder="HH:MM:SS"
              min="00:00:00"
              max="23:59:59"
              step="1"
-             ng-disabled="!editMode">
+             ng-disabled="!isEditActivity && !isAddActivity">
     </md-input-container>
-
 
     <md-input-container>
       <label>Type</label>
       <!-- <md-datepicker ng-model="activity.date">{{activity.date}}</md-datepicker> -->
       <!-- <input ng-model="activity.type"> -->
-      <md-select md-container-class="activities" ng-model="activity.type" ng-disabled="!editMode">
+      <md-select md-container-class="activities" ng-model="activity.activity_type_id" ng-disabled="!isEditActivity && !isAddActivity">
         <md-option ng-repeat="activityType in activitiesFilters" value="{{activityType.id}}">
           {{activityType.label}}
         </md-option>
       </md-select>
     </md-input-container>
+  </div>
 
-
-    <md-input-container>
+    <md-input-container class="comment-container">
       <label>Comment</label>
       <!-- <md-datepicker ng-model="activity.date">{{activity.date}}</md-datepicker> -->
-    <textarea ng-model="activity.comment" md-maxlength=100 ng-disabled="!editMode"></textarea>
+    <textarea ng-model="activity.comment" md-maxlength=100 ng-disabled="!isEditActivity && !isAddActivity"></textarea>
     </md-input-container>
 
 </md-content>
-
 <md-content layout="row" layout-align="space around">
-  <md-button ng-click="edit()" ng-if="isViewActivity">Edit</md-button>
-  <md-button ng-click="saveActivity(activity)" ng-if="editMode">Save</md-button>
-<md-button ng-click="reset()" ng-if="isViewActivity && editMode">Reset</md-button>
-<md-button ng-click="delete(activity)" ng-if="isViewActivity && !editMode">Delete</md-button>
-  <md-button ng-click="cancel()" ng-if="isViewActivity">Cancel</md-button>
+  <md-button ng-click="edit()" ng-if="isViewActivity && !isEditActivity">Edit</md-button>
+  <md-button ng-click="saveActivity(activity)" ng-if="isEditActivity">Save</md-button>
+  <md-button ng-click="addActivity()" ng-if="isAddActivity">Save</md-button>
+  <md-button ng-click="reset()" ng-if="isViewActivity && isEditActivity">Reset</md-button>
+  <md-button ng-click="delete(activity)" ng-if="isViewActivity && !isEditActivity">Delete</md-button>
+  <md-button ng-click="cancel()" ng-if="isViewActivity || isAddActivity">Cancel</md-button>
 </md-content>

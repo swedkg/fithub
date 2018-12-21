@@ -1,7 +1,8 @@
-<md-input-container>
-  <label>Search</label>
+<md-input-container md-no-float>
+
   <input type="text"
         ng-model="vm.searchTerm"
         ng-model-options="{debounce: 1000}"
+        placeholder="Search"
         ng-change="vm.searchActivities()">
 </md-input-container>

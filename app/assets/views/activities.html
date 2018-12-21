@@ -1,37 +1,25 @@
-<div ng-controller="activitiesController as vm">
+<div class="container">
+  <div ng-controller="activitiesController as vm" class="activities-container">
 
-  <h1>{{vm.something}}</h1>
+    <div layout="column" layout-align="space-between" class="container utils">
+      <div class="search-and-add">
+        <ng-include src="'/assets/views/activitiesSearchPartial.html'"></ng-include>
 
-  <!-- <pre>current user: {{vm.currentUser | json}}</pre> -->
-  <!-- <pre>editActivityId: {{vm.editActivityId | json}}</pre> -->
-  <!-- <pre>editMode: {{vm.editMode | json}}</pre> -->
+        <md-button type="button"
+                  class="md-fab md-mini add-activity"
+                  layout="row"
+                  layout-align="center"
+                  ng-click="vm.addActivity($event)">
+                  <i class="material-icons">add</i>
+                  <md-tooltip>Add activity</md-tooltip>
+        </md-button>
+      </div>
 
-  <!-- <pre>vm.activities: {{vm.activities | json}}</pre> -->
-  <!-- <pre>activitiesTypes: {{vm.activitiesTypes | json}}</pre> -->
-  <!-- <pre>vm.activitesPlaceholder: {{vm.activitesPlaceholder | json}}</pre> -->
-  <!-- <pre>vm.currentUserActivitiesTypes: {{vm.currentUserActivitiesTypes | json}}</pre> -->
-  <!-- <pre>vm.activitiesFilters: {{vm.activitiesFilters | json}}</pre> -->
-  <!-- <pre>vm.activityFilter: {{vm.activityFilter | json}}</pre> -->
-  <!-- <pre>vm.sortByProperty: {{vm.sortByProperty | json}}</pre> -->
-  <!-- <pre>vm.reverse: {{vm.reverse | json}}</pre> -->
-  <!-- <pre>vm.order: {{vm.order | json}}</pre> -->
-  <!-- <pre>vm.searchTerm: {{vm.searchTerm | json}}</pre> -->
+      <ng-include src="'/assets/views/activitiesFiltersPartial.html'"></ng-include>
 
-<div layout="row" layout-align="space-between">
-  <ng-include src="'/assets/views/activitiesSearchPartial.html'"></ng-include>
-  <md-button type="button"
-             class="md-fab md-mini add-activity"
-             layout="row"
-             layout-align="center"
-             ng-click="vm.addActivity($event)">
-             <i class="material-icons">add</i>
-             <md-tooltip>Add activity</md-tooltip>
-  </md-button>
+    </div>
+    <md-divider class="bg-red"></md-divider>
+    <ng-include src="'/assets/views/activitiesTablePartial.html'"></ng-include>
 
-</div>
-
-
-<ng-include src="'/assets/views/activitiesTablePartial.html'"></ng-include>
-
-
+  </div>
 </div>

@@ -1,41 +1,67 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light" role="navigation">
-<a class="navbar-brand" href="#">FitHub</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarTogglerDemo01"
-    aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarToggler">
+<header class="pb-4 pt-4" ng-class="[navBarClass]">
+  <div id="backdrop" class="display-none"></div>
+  <div class="container">
 
-    <ul class="navbar-nav mr-auto">
-      <!-- <ul class="menu"> -->
-      <!-- <li class="nav-item">
-        <a class="nav-link" ui-sref="home" ui-sref-active="active">home</a>
-      </li> -->
-      <!-- <li class="nav-item">
-        <a class="nav-link" ui-sref="about" ui-sref-active="active">about</a>
-      </li> -->
-      <!-- <li class="nav-item">
-        <a class="nav-link" ui-sref="contact" ui-sref-active="active">contact</a>
-      </li> -->
-      <li class="nav-item" ng-if="!vm.isUserLoggedIn">
-        <a class="nav-link" ui-sref="login" ui-sref-active="active">register / login</a>
-      </li>
-      <!-- <li class="nav-item" ng-if="vm.isUserLoggedIn">
-      <a class="nav-link" ui-sref="user" ui-sref-active="active">my account</a>
-      </li> -->
-      <li class="nav-item" ng-if="vm.isUserLoggedIn">
-        <a class="nav-link" ui-sref="user({id: vm.currentUser})" ui-sref-active="active">my profile</a>
-      </li>
-      <!-- <li class="nav-item" ng-if="vm.isUserLoggedIn">
-<a class="nav-link" ui-sref="activities" ui-sref-active="active">my activities</a>
-      </li> -->
-      <li class="nav-item">
-        <a class="nav-link" ui-sref="activities" ng-if="vm.isUserLoggedIn"ui-sref-active="active">my activities</a>
-      </li>
-      <li class="nav-item" ng-if="vm.isUserLoggedIn">
-        <a class="nav-link" ui-sref="home" ng-click="vm.logout()">logout</a>
-      </li>
-    </ul>
+    <nav class="navbar navbar-expand-lg navbar-dark" role="navigation">
+      <a class="navbar-brand"
+         href="#"
+         data-toggle="collapse"
+         data-target=".navbar-collapse.show">
+        <img src="/assets/img/logo.svg" class="svg" alt="">
+      </a>
+      <button class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarToggler"
+              aria-controls="navbarToggler"
+              aria-expanded="false"
+              aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarToggler">
 
+        <ul class="navbar-nav mr-auto justify-content-end w-100">
+          <li class="nav-item pt-4"
+              data-toggle="collapse" data-target=".navbar-collapse.show"
+              ng-if="!vm.isUserLoggedIn">
+            <a class="nav-link"
+              ui-sref="signup"
+              ui-sref-active="active">Register for free</a>
+          </li>
+          <li class="nav-item pt-4 pl-lg-4"
+              data-toggle="collapse" data-target=".navbar-collapse.show"
+              ng-if="!vm.isUserLoggedIn">
+            <a class="nav-link"
+              ui-sref="login"
+              ui-sref-active="active">Login</a>
+          </li>
+
+          <li class="nav-item pt-4"
+              data-toggle="collapse"
+              data-target=".navbar-collapse.show"
+              ng-if="vm.isUserLoggedIn">
+            <a class="nav-link"
+               ui-sref="user({id: vm.currentUser})"
+               ui-sref-active="active">my profile</a>
+          </li>
+
+          <li class="nav-item pt-4"
+              data-toggle="collapse"
+              data-target=".navbar-collapse.show">
+            <a class="nav-link"
+               ui-sref="activities"
+               ng-if="vm.isUserLoggedIn"
+               ui-sref-active="active">my activities</a>
+          </li>
+          <li class="nav-item pt-4"
+              ng-if="vm.isUserLoggedIn"
+              data-toggle="collapse"
+              data-target=".navbar-collapse.show">
+            <a class="nav-link" ui-sref="home" ng-click="vm.logout()">logout</a>
+          </li>
+        </ul>
+
+      </div>
+    </nav>
   </div>
-</nav>
+</header>

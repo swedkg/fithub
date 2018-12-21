@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>fithub</title>
+  <title>Move and Groove</title>
   <!-- <base href="/"> -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!-- <meta http-equiv="Content-Security-Policy"
@@ -14,10 +14,12 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700" rel="stylesheet">
   <link rel="stylesheet" href="/bower_components/normalize-css/normalize.css">
   <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
   <link rel="stylesheet" href="/bower_components/sportsfont/css/sports.css">
+  <link rel="stylesheet" href="/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="assets/css/style.min.css" rel="stylesheet">
 
@@ -25,21 +27,22 @@
 
 </head>
 
-<body class="container p-5">
+<body ng-class="$state.current.name">
 
-  <navigation-bar></navigation-bar>
 
   <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-  <![endif]-->
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
 
   <main class="main" role="main">
+
+    <navigation-bar></navigation-bar>
+
     <ui-view></ui-view>
 
   </main>
 
-  <footer class="footer" role="contentinfo">
-  </footer>
+<footer class="footer" role="contentinfo" ng-include="'/assets/views/footer.html'"></footer>
 
   <!-- bower_components -->
   <script src="/bower_components/jquery/dist/jquery.js"></script>
@@ -66,14 +69,13 @@
   <script src="/assets/js/factories/userResourceFactory.js"></script>
   <script src="/assets/js/factories/activitiesResourceFactory.js"></script>
   <script src="/assets/js/factories/activityTypesFactory.js"></script>
+  <script src="/assets/js/factories/utilsFactory.js"></script>
+  <script src="/assets/js/services/userSrv.js"></script>
   <!-- directives -->
   <script src="/assets/js/directives/navigationBarDirective.js"></script>
   <script src="/assets/js/directives/carouselDirective.js"></script>
+  <script src="/assets/js/directives/passwordVerify.js"></script>
 
-  <script>
-    // window.jQuery || document.write('<script src="assets/components/jquery.js"><\/script>');
-
-  </script>
   <script src="assets/js/scripts.min.js"></script>
 
 

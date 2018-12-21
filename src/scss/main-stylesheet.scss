@@ -1,78 +1,123 @@
+@import "../../app/bower_components/bootstrap/scss/bootstrap.scss";
+@import "progressbar.scss";
+@import "generic.scss";
+@import "navigation.scss";
+@import "activities.scss";
+@import "footer.scss";
+
+
+
+// @import "/../node_modules/bootstrap/scss/bootstrap";
+$white-70: hsla(0, 0%, 100%, 0.7);
+
+$breakpoint-xs: 0;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+
 body {
-  // background: red
-  // font-size: 2rem
-}
+  font-size: 2rem;
+  height: auto;
+  font-family: 'Roboto', sans-serif;
 
-a.nav-link {
-  border-bottom: 2px solid transparent;
-  transition: 0.25s;
-  text-transform: capitalize;
+  &.login {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-image: url('/assets/img/running.jpg');
 
-  &.active {
-    border-bottom-color: red;
+    footer {
+      display: none;
+    }
+  }
+
+  &.signup {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-image: url('/assets/img/running.jpg');
+
+    footer {
+      display: none;
+    }
   }
 }
 
-.main {
-  margin-top: 1rem
+blockquote q {
+  display: table-cell;
+  text-align: center;
 }
+
+q {
+  quotes: '\201c''\201d';
+}
+
+q:before {
+  content: open-quote;
+}
+
+q:after {
+  content: close-quote;
+}
+
+div#backdrop {
+  background-color: hsl(0, 0%, 100%);
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+}
+
+.form-backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: hsla(0, 0%, 100%, 0.65);
+  z-index: 0;
+}
+
+.motivational {
+  margin-top: 15rem;
+}
+
 
 .carousel-item-div-background {
   width: 100%;
-  min-height: 50vh;
-  max-height: 70vh;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
+
+  @media (orientation: landscape) {
+    height: 100vh;
+  }
+
+  @media (orientation: portrait) {
+    height: 80vh;
+  }
+
+  @media screen and (min-width: $breakpoint-lg) and (orientation: landscape) {
+    height: 80vh;
+  }
+
+}
+
+.user-form-container {
+  position: relative;
+  background: $white-70;
+  border-radius: 3px;
 }
 
 // activities
 
-.activities-filters {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
 
-.filter-label {
-  border-bottom: 1px solid transparent;
-  text-transform: capitalize;
-  margin-left: 8px;
-  padding-bottom: 2px;
-  &.active {
-    border-bottom: 1px solid red;
-  }
-}
 
-  .active {
-    border-bottom: 1px solid red;
-  }
 
-button.add-activity {
-  min-height: unset;
-  height: 36px;
-}
 
-.sortorder:after {
-  content: '\25b2';
-  // BLACK UP-POINTING TRIANGLE */
-}
-
-.sortorder.reverse:after {
-  content: '\25bc';
-  // BLACK DOWN-POINTING TRIANGLE */
-}
-
-.activities {
-  md-select-menu {
-    background-color: #ffffff
-  }
-}
-
-th span.title {
-  display: flex;
-  justify-content: space-between;
-}
 
 // material overrides
 // md-dialog.md-dialog-fullscreen {
@@ -93,120 +138,90 @@ th span.title {
 // }
 
 // virtual repeat
-#vertical-container {
-  height: 292px;
-  width: 100%;
-}
 
-.repeated-item {
-  // border-bottom: 1px solid #ddd;
-  // box-sizing: border-box;
-  // height: 40px;
-  // padding-top: 10px;
-}
 
-md-content {
-  // margin: 16px;
-}
 
-md-virtual-repeat-container,
-.table-header {
-  // border: solid 1px hsl(0, 0%, 80%);
 
-  .table-row {
-    display: flex;
-    padding: 0;
-    margin: 0;
 
-    span {
-      display: block;
-      // flex: 1;
-      // background-color: hsla(197, 100%, 50%, 0.199);
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      padding: 4px;
-      overflow: hidden;
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    .h-100vh#{$infix} {
+      height: 100vh !important;
     }
+
+    .p#{$infix}-6 {
+      padding: 6rem !important;
+    }
+
+  }
+}
+
+// --breakpoint-xs: 0;
+// --breakpoint-sm: 576px;
+// --breakpoint-md: 768px;
+// --breakpoint-lg: 992px;
+// --breakpoint-xl: 1200px;
+
+@include media-breakpoint-up(xs) {
+  header a.navbar-brand svg {
+    width: 20rem;
+  }
+
+  .user-form-container {
+    background: none;
+    margin-top: 6rem;
+  }
+
+  .motivational {
+    margin-top: 10rem;
+  }
+
+  blockquote q {
+    font-size: 3rem;
   }
 
 }
 
-.progress-circular-holder {
-    position: absolute;
-    top: 40px;
-    /* width: 100%; */
-    left: 30px;
-    right: 30px;
-    z-index: 1000;
+@include media-breakpoint-up(sm) {}
+
+@include media-breakpoint-up(md) {
+  header a.navbar-brand svg {
+    width: 25rem;
+  }
+
+  .form-backdrop {
+    display: none;
+  }
+
+  .user-form-container {
+    background: $white-70;
+    margin-top: 10rem !important;
+    padding: 6rem !important;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  blockquote q {
+    font-size: 4rem;
+  }
 }
 
-.md-virtual-repeat-container .md-virtual-repeat-offsetter div {}
+@include media-breakpoint-up(lg) {
+  header a.navbar-brand svg {
+    width: 30rem;
+  }
 
-
-// generic
-
-.w-5 {
-  width: 5%
+  blockquote q {
+    font-size: 5rem;
+  }
 }
 
-.w-7_5 {
-  width: 7.5%
-}
-
-.w-10 {
-  width: 10%
-}
-
-.w-15 {
-  width: 15%
-}
-
-.w-20 {
-  width: 20%
-}
-
-.w-40 {
-  width: 40%
-}
-
-.display-block {
-  display: block !important;
-}
-
-.display-flex {
-  display: flex !important;
-}
-
-.text-transform__capitalize {
-  text-transform: capitalize
-}
-
-.position-relative {
-  position: relative;
-}
-
-.cursor-pointer {
-  cursor: pointer;
-}
-
-.truncate {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.noselect {
-  -webkit-touch-callout: none !important;
-  /* iOS Safari */
-  -webkit-user-select: none !important;
-  /* Safari */
-  -khtml-user-select: none !important;
-  /* Konqueror HTML */
-  -moz-user-select: none !important;
-  /* Firefox */
-  -ms-user-select: none !important;
-  /* Internet Explorer/Edge */
-  user-select: none !important;
-  /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
+@include media-breakpoint-up(xl) {
+  blockquote q {
+    font-size: 6rem;
+  }
 }

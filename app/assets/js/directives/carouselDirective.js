@@ -25,10 +25,14 @@ function carouselCtrl ($scope) {
     ]
 
     angular.element(document).ready(function () {
-      document.getElementsByClassName('carousel-item')[0].className = "carousel-item active ng-scope";
-      document.getElementsByClassName('carousel-indicator')[0].className = "carousel-indicator active ng-scope";
+      document.getElementsByClassName('carousel-item')[0].className = "carousel-item active";
+      // document.getElementsByClassName('carousel-indicator')[0].className = "carousel-indicator active ng-scope";
 
-      $('.carousel').carousel();
+      $('.carousel').carousel({
+        ride: 'carousel',
+        interval: 5000,
+        pause: false
+      });
 
     });
 

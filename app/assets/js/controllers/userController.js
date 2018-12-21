@@ -4,7 +4,13 @@ function userController ($rootScope, $scope, $state, $stateParams, $mdToast, use
 
 
   var vm = this;
-  vm.$onInit = onInit;
+
+  if ($rootScope.isUserLoggedIn === false) {
+    $state.go('home');
+    return null;
+  } else {
+    vm.$onInit = onInit;
+  }
 
   function onInit () {
 
@@ -16,32 +22,34 @@ function userController ($rootScope, $scope, $state, $stateParams, $mdToast, use
     var userDetailsCopy = {};
 
     vm.editUser = false;
-    // vm.currentUser = $rootScope.currentUser
-    // vm.currentUser = $stateParams.id;
+    vm.currentUser = $rootScope.currentUser
+    vm.currentUser = $stateParams.id;
 
-    if (vm.isUserLoggedIn) {
-      vm.currentUser = $rootScope.currentUser;
-    }
-    else
-      if (!vm.isUserLoggedIn && typeof $stateParams.id != 'undefined') {
-        vm.currentUser = $stateParams.id;
-      }
+    // else
+    //   if (!vm.isUserLoggedIn && typeof $stateParams.id != 'undefined') {
+    //     vm.currentUser = $stateParams.id;
+    //   }
 
-    vm.currentUser = 4
-    // console.log($rootScope, $stateParams.id)
+    // vm.currentUser = 4
+    console.log($rootScope, vm, $stateParams)
 
 
     vm.currentUserDetails = {}
     vm.currentUserActivities = []
 
     if (vm.currentUser === null) {
-      return null;
+      $state.go('user/login')
     } else {
-      var user = userResourceFactory.get({
-        id: vm.currentUser
-      }).$promise.then(function (user) {
-        vm.currentUserDetails = user
-      })
+      try {
+        vm.currentUserDetails = $rootScope.currentUser
+      } catch (err) {
+        console.log('User not found')
+      }
+      // var user = userResourceFactory.get({
+      //   id: vm.currentUser
+      // }).$promise.then(function (user) {
+      //   vm.currentUserDetails = user
+      // })
 
       // console.log($stateParams, user)
     }
@@ -52,7 +60,9 @@ function userController ($rootScope, $scope, $state, $stateParams, $mdToast, use
     }
 
     function saveUserDetails () {
-      vm.currentUserDetails.$update(function (params) {
+      console.log($rootScope.User);
+
+      $rootScope.User.$update(function (params) {
         vm.editUser = false;
         $mdToast.show(
           $mdToast.simple()

@@ -1,16 +1,16 @@
 'use strict'
 
-function homeController ($scope) {
+function homeController ($scope, utilsFactory) {
   var vm = this;
   vm.$onInit = onInit;
 
   function onInit () {
-    vm.viewName = 'this is our home'
+    utilsFactory.replaceSvg();
   }
 
 }
 
-homeController.$inject = ['$scope'];
+homeController.$inject = ['$scope', 'utilsFactory'];
 
 angular.module('fithub')
   .controller('homeController', homeController);

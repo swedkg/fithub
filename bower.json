@@ -11,6 +11,7 @@
     "modernizr": "latest",
     "jquery": "latest",
     "normalize-css": "latest",
-    "sportsfont": "latest"
+    "sportsfont": "latest",
+    "material-design-icons": "latest"
   }
 }

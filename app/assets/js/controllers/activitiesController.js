@@ -1,10 +1,24 @@
 'use strict'
 
-function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResourceFactory, $resource, userResourceFactory, activityTypesFactory, $state) {
+function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResourceFactory, $resource, userResourceFactory, activityTypesFactory, $state, $mdToast, userSrv) {
   var vm = this;
-  vm.$onInit = onInit;
+
+
+
+  if ($rootScope.isUserLoggedIn === false) {
+    $state.go('home');
+    return null;
+  } else {
+    vm.$onInit = onInit;
+  }
+
 
   function onInit () {
+
+
+    console.log($rootScope);
+
+
     vm.something = "activities here"
     vm.editActivity = editActivity;
     vm.saveActivity = saveActivity;
@@ -26,25 +40,30 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
     vm.currentUserActivitiesTypes = [];
     vm.activitiesFilters = [];
         // TODO: remove hard coded user ID
-    vm.currentUser = $rootScope.currentUser = 4
-    // vm.currentUser = $rootScope.currentUser
+    // vm.currentUser = $rootScope.currentUser = 4
+
 
     // vm.addActivity = false;
-    vm.editMode = false;
+    vm.isEditActivity = false;
+    vm.isAddActivity = false
     vm.reverse = false;
     vm.order = 'desc';
     vm.disableProgressBar = true;
     vm.activityFilter = 0;
     vm.sortByProperty = 'date';
-    vm.sortByPropertyList = ['date', 'title', 'type', 'duration'];
+    vm.sortByPropertyList = [
+      {type: 'date', label: 'date'},
+      {type: 'title', label: 'title' },
+      {type: 'activity_type_id', label: 'type' },
+      {type: 'duration', label: 'duration' }
+    ];
 
 
-    // TODO: graphs
+    try {
+      vm.currentUser = $rootScope.currentUser.id
+    } catch (err) {
 
-    if (typeof vm.currentUser == 'undefined')
-      $state.go('home')
-
-
+    }
 
     // console.log(vm.currentUser, typeof vm.currentUser)
 
@@ -178,7 +197,7 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
     function editActivity(activity) {
       console.log(activity)
       vm.editActivityId = activity.id;
-      vm.editMode = true;
+      vm.isEditActivity = true;
 
 
       // vm.currentActivity = Activities.filter(function (activity) {
@@ -207,9 +226,17 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
 
       delete activity.filterDate;
       delete activity.filterDuration;
-      activity.$update(function () {
+      activity.$update(function (value, responseHeaders, status, statusText) {
+        console.log(arguments);
+        if (status === 200) {
+          $mdToast.show(
+            $mdToast.simple()
+              .textContent('The activity was updated')
+              .hideDelay(3000)
+          );
+        }
         vm.activities.refresh();
-        vm.editMode = false;
+        vm.isEditActivity = false;
         activity.filterDate = new Date(activity.date);
         activity.filterDuration = new Date(activity.duration);
       })
@@ -221,12 +248,25 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
 
     }
 
-    function deleteActivity(activity) {
-      activity.$delete(function () {
+    function deleteActivity (activity) {
+
+      console.log(activity);
+      // function (value, responseHeaders, status, statusText) {
+      //   xTotalCount = responseHeaders('X-Total-Count')
+      // }
+      activity.$delete(function (value, responseHeaders, status, statusText) {
+        console.log(arguments);
         vm.activities.refresh();
+        if (status === 200) {
+          $mdToast.show(
+            $mdToast.simple()
+              .textContent('The activity was deleted')
+              .hideDelay(3000)
+          );
+        }
         // Activities = activitiesResourceFactory.query()
         // vm.currentActivity = {}
-        // vm.editMode = false;
+        // vm.isEditActivity = false;
       })
     }
 
@@ -240,7 +280,7 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
         controller: addActivityController,
         templateUrl: '/assets/views/activities-show.html',
         // parent: angular.element(document.body),
-        fullscreen: true,
+        fullscreen: false,
         targetEvent: ev,
         clickOutsideToClose: true,
       })
@@ -254,14 +294,14 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
         locals: {
           activity: activity,
           activitiesFilters: vm.activitiesFilters,
-          editMode: vm.editMode
+          isEditActivity: vm.isEditActivity
         },
         bindToController: true,
         controller: viewActivityController,
         templateUrl: '/assets/views/activities-show.html',
         parent: parent,
         targetEvent: ev,
-        fullscreen: true,
+        fullscreen: false,
         clickOutsideToClose: true,
         onRemoving: function ($event) {
           vm.activities.refresh()
@@ -382,12 +422,12 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
       // promise. In real code, this function would likely contain an
       // $http request.
 
-      var activityFilter = (vm.activityFilter === 0) ? undefined : vm.activityFilter;
+      var activityFilter = (vm.activityFilter === 0) ? '0' : vm.activityFilter;
 
       var Activities = activitiesResourceFactory.get({
-        type: activityFilter,
+        type: activityFilter.toString(),
         q: vm.searchTerm,
-        user: vm.currentUser,
+        // user_id: vm.currentUser,
         _page: pageNumber + 1,
         _order: vm.order,
         _sort: vm.sortByProperty,
@@ -409,24 +449,24 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
 
     DynamicItems.prototype.fetchNumItems_ = function () {
       var xTotalCount;
-      var activityFilter = (vm.activityFilter === 0) ? undefined : vm.activityFilter;
+      var activityFilter = (vm.activityFilter === 0) ? '0' : vm.activityFilter;
       var Activities = activitiesResourceFactory.get({
-        type: activityFilter,
+        type: activityFilter.toString(),
         q: vm.searchTerm,
-        user: vm.currentUser,
+        // user_id: vm.currentUser,
         // _page: this.pageNumber,
         _order: vm.order,
         _sort: vm.sortByProperty,
         _limit: this.PAGE_SIZE
-      }, function (data, headers) {
-        xTotalCount = headers('x-total-count')
+      }, function (value, responseHeaders, status, statusText ) {
+        xTotalCount = responseHeaders('X-Total-Count')
       })
       // For demo purposes, we simulate loading the item count with a timed
       // promise. In real code, this function would likely contain an
       // $http request.
       Activities.$promise.then(angular.bind(this, function () {
         this.numItems = xTotalCount;
-        vm.disableProgressBar = false;
+        vm.disableProgressBar = true;
       }));
     };
 
@@ -449,7 +489,7 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
     };
 
     function convertDate2Epoch(date) {
-      return date.getTime();
+      return new Date(date).getTime();
     }
     function convertDuration2Epoch (date) {
       return new Date(date).getTime();
@@ -459,7 +499,8 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
       var self = this;
       $scope.newActivity = {};
       $scope.isViewActivity = false;
-
+      $scope.isAddActivity = true;
+      $scope.user = $rootScope.currentUser
       // TODO: remove hard coded user ID
       $scope.newActivity.user = self.userId;
       $scope.activitiesFilters = self.activitiesFilters.slice(1, self.activitiesFilters.length);
@@ -476,16 +517,15 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
       $scope.addActivity = function () {
         // return null;
         var NewActivity = new activitiesResourceFactory();
-        NewActivity.title = $scope.newActivity.title;
-        NewActivity.date = $scope.newActivity.date.getTime();
-        NewActivity.type = $scope.newActivity.type;
-        NewActivity.duration = $scope.newActivity.ducation;
-        NewActivity.comment = $scope.newActivity.comment;
-        NewActivity.user = $scope.newActivity.user;
+        NewActivity.user_id = $scope.user.id;
+        NewActivity.title = $scope.activity.title;
+        NewActivity.date = $scope.activity.filterDate.getTime();
+        NewActivity.activity_type_id = $scope.activity.activity_type_id;
+        NewActivity.duration = $scope.activity.filterDuration;
+        NewActivity.comment = $scope.activity.comment;
         console.log(NewActivity);
 
-
-        NewActivity.$save(function () {
+        NewActivity.$create(function () {
           console.log('finished')
           $scope.hide()
           vm.activities.refresh();
@@ -497,10 +537,12 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
     function viewActivityController ($scope, $mdDialog, $state, $filter) {
       var self = this;
 
-
       $scope.isViewActivity = true;
-      $scope.editMode = false;
+      $scope.isEditActivity = false;
       $scope.activity = self.activity;
+      $scope.activitiesFilters = self.activitiesFilters;
+      console.log($scope.activity);
+
       $scope.activity.filterDate = $filter('date')($scope.activity.date, 'd MMM, y H:mm');
       // $scope.activity.filterDuration = $filter('date')($scope.activity.duration, 'd MMM,y HH:MM:ss');
       $scope.activity.filterDuration = new Date($scope.activity.duration);
@@ -529,11 +571,11 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
         $scope.activity.duration = activityCopy.duration;
         $scope.activity.filterDuration = activityCopy.filterDuration;
         $scope.activity.comment = activityCopy.comment;
-        $scope.activity.type = activityCopy.type;
+        $scope.activity.activity_type_id = activityCopy.activity_type_id;
       }
 
       $scope.edit = function () {
-        $scope.editMode = true;
+        $scope.isEditActivity = true;
       }
 
       $scope.saveActivity = function (activity) {
@@ -565,7 +607,7 @@ function activitiesController ($rootScope, $timeout, $mdDialog, activitiesResour
   self.viewName = 'activitiesController';
 }
 
-activitiesController.$inject = ['$rootScope', '$timeout', '$mdDialog', 'activitiesResourceFactory', '$resource', 'userResourceFactory', 'activityTypesFactory', '$state']
+activitiesController.$inject = ['$rootScope', '$timeout', '$mdDialog', 'activitiesResourceFactory', '$resource', 'userResourceFactory', 'activityTypesFactory', '$state', '$mdToast', 'userSrv']
 
 angular.module('fithub')
   .controller('activitiesController', activitiesController);
