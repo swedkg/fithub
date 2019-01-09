@@ -31,7 +31,7 @@ angular
         templateUrl: '/assets/views/contact.html'
       })
       .state('user', {
-        url: '/user/:id',
+        url: '/user/profile',
         // controller: 'userController as ctrl',
         params: {
           id: null

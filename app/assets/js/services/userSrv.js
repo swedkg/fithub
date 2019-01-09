@@ -5,7 +5,6 @@ function userSrv ($rootScope, $cookies, userResourceFactory, $state) {
 
   var self = this;
 
-  self.logError = logError;
   self.removeCookies = removeCookies;
   self.login = login;
 
@@ -15,10 +14,6 @@ function userSrv ($rootScope, $cookies, userResourceFactory, $state) {
     $cookies.remove("user_email");
     $cookies.remove("user_token");
   }
-
-  function logError (msg) {
-    console.log(msg);
-  };
 
   function login (email, password) {
 
@@ -36,13 +31,7 @@ function userSrv ($rootScope, $cookies, userResourceFactory, $state) {
 
     }, function (value, responseHeaders, status, statusText) {
       responseStatus = response.status
-      console.log(response);
     })
-
-    // User.$promise.then(function () {
-
-    // })
-
 
   }
 
@@ -70,7 +59,6 @@ function userSrv ($rootScope, $cookies, userResourceFactory, $state) {
   $rootScope.$on('user logout', function (event, data) {
     try {
       User.$logOut();
-      console.log(arguments, User)
     } catch (err) { }
   })
 

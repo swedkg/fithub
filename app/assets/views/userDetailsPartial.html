@@ -45,6 +45,7 @@
       </div>
     </div>
     <div class="form-group"
+        ng-if="!vm.isUserLoggedIn"
          ng-class="{'invalid-form-input':
                     userDetailsForm.password.$touched === true &&
                     userDetailsForm.password.$invalid === true}">
@@ -66,12 +67,9 @@
 
     </div>
     <div class="form-group"
+          ng-if="!vm.isUserLoggedIn"
           ng-class="{'invalid-form-input':
           userDetailsForm.passwordConfirmation.$touched === true}">
-    <!-- <div class="form-group"
-          ng-class="{'invalid-form-input':
-          userDetailsForm.passwordConfirmation.$touched === true &&
-          vm.currentUserDetails.password !== vm.currentUserDetails.passwordConfirmation}"> -->
       <label for="passwordConfirmation">Password Confirmation</label>
       <input type="password"
             name="passwordConfirmation"
@@ -86,26 +84,7 @@
     <div class="invalid-feedback" ng-if="userDetailsForm.$error.passwordVerify.length>0">
         Passwords do not match.
       </div>
-
     </div>
-    <!-- <button type="button"
-            class="btn btn-primary btn-lg"
-            ng-disabled="vm.editUser"
-            ng-if="!vm.createUserMode"
-            ng-click="vm.editUserDetails()">Edit
-    </button>
-    <button type="button"
-            class="btn btn-primary btn-lg"
-            ng-disabled="!vm.editUser"
-            ng-if="!vm.createUserMode"
-            ng-click="vm.saveUserDetails()">Save
-    </button>
-    <button type="button"
-            class="btn btn-primary btn-lg"
-            ng-disabled="!vm.editUser"
-            ng-if="!vm.createUserMode"
-            ng-click="vm.cancelUserEdit()">Cancel
-    </button> -->
     <button type="button"
             class="btn btn-primary btn-lg"
             ng-disabled="userDetailsForm.$invalid"

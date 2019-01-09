@@ -30,10 +30,6 @@ function userController ($rootScope, $scope, $state, $stateParams, $mdToast, use
     //     vm.currentUser = $stateParams.id;
     //   }
 
-    // vm.currentUser = 4
-    console.log($rootScope, vm, $stateParams)
-
-
     vm.currentUserDetails = {}
     vm.currentUserActivities = []
 
@@ -45,13 +41,7 @@ function userController ($rootScope, $scope, $state, $stateParams, $mdToast, use
       } catch (err) {
         console.log('User not found')
       }
-      // var user = userResourceFactory.get({
-      //   id: vm.currentUser
-      // }).$promise.then(function (user) {
-      //   vm.currentUserDetails = user
-      // })
 
-      // console.log($stateParams, user)
     }
 
     function editUserDetails () {
@@ -60,7 +50,6 @@ function userController ($rootScope, $scope, $state, $stateParams, $mdToast, use
     }
 
     function saveUserDetails () {
-      console.log($rootScope.User);
 
       $rootScope.User.$update(function (params) {
         vm.editUser = false;
@@ -69,7 +58,6 @@ function userController ($rootScope, $scope, $state, $stateParams, $mdToast, use
             .textContent('User details updated')
             .hideDelay(3000)
         );
-        console.log('user details updated')
       });
     }
 

@@ -5,6 +5,7 @@ function signUpController ($rootScope, $scope, userResourceFactory, $mdToast, $s
 
   var vm = this;
   vm.$onInit = onInit;
+  vm.isUserLoggedIn = $rootScope.isUserLoggedIn;
 
   function onInit () {
 
@@ -19,7 +20,6 @@ function signUpController ($rootScope, $scope, userResourceFactory, $mdToast, $s
         first_name: vm.currentUserDetails.first_name,
         last_name: vm.currentUserDetails.last_name
       }, function (value, responseHeaders, status, statusText) {
-        console.log(arguments, User);
         if (status === 200) {
           $mdToast.show(
             $mdToast.simple()
@@ -29,8 +29,7 @@ function signUpController ($rootScope, $scope, userResourceFactory, $mdToast, $s
 
             var email = User.email;
             var password = User.password;
-            console.log(User, email, password);
-              userSrv.login(email, password);
+            userSrv.login(email, password);
           });
         } else {
           $mdToast.show(
@@ -45,8 +44,6 @@ function signUpController ($rootScope, $scope, userResourceFactory, $mdToast, $s
     }
 
     var deregisterStatusListener = $rootScope.$on('login response status', function (event, data) {
-      console.log(arguments);
-
       if (data === 200) {
         $state.go('user', {
           id: $rootScope.currentUser.id,
@@ -60,8 +57,6 @@ function signUpController ($rootScope, $scope, userResourceFactory, $mdToast, $s
       }
     })
 
-    console.log($rootScope);
-
     function destroyListeners () {
       deregisterStatusListener();
     }
@@ -69,8 +64,6 @@ function signUpController ($rootScope, $scope, userResourceFactory, $mdToast, $s
     $scope.$on('$destroy', destroyListeners);
 
   }
-
-
 }
 
 signUpController.$inject = ['$rootScope', '$scope', 'userResourceFactory', '$mdToast', '$state', 'userSrv'];

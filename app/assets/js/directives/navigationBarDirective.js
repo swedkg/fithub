@@ -10,16 +10,13 @@ function navigationBarCtrl ($rootScope, $scope, $state, $window, utilsFactory) {
     $rootScope.$on('user login', function (event, data) {
       $rootScope.isUserLoggedIn = vm.isUserLoggedIn = data;
       vm.currentUser = $rootScope.currentUser;
-      console.log(arguments, $rootScope.isUserLoggedIn, $scope)
     })
 
     vm.logout = function () {
       $rootScope.$emit('user logout', true)
       $rootScope.isUserLoggedIn = vm.isUserLoggedIn = false;
       $rootScope.currentUser = {}
-      console.log($rootScope.isUserLoggedIn)
     }
-
 
     function handleWindowScroll (params) {
       var top = window.pageYOffset || document.documentElement.scrollTop;
@@ -27,7 +24,6 @@ function navigationBarCtrl ($rootScope, $scope, $state, $window, utilsFactory) {
         document.querySelector('navigation-bar header').classList.add('is-stuck') :
         document.querySelector('navigation-bar header').classList.remove('is-stuck');
     }
-
 
     function hideBackdrop() {
       var backdrop = document.querySelector('#backdrop');
